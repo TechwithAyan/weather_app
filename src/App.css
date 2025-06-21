@@ -1,0 +1,364 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+html,
+body {
+  width: 100%;
+  min-height: 100vh;
+  background-color: #101010;
+  color: #f5f5f5;
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+  overscroll-behavior: none; /* Prevent zoom from bubbling to page */
+}
+
+/* 🔹 Full-Width Header */
+.header {
+  width: 100%;
+  background: linear-gradient(to right, #0ce0ab, #243b55);
+  padding: 20px 3vw;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.4);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.search-bar {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  background: #020303;
+  border-radius: 70px;
+  padding: 22px 25px;
+  border: 2px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 
+  0 4px 12px rgba(174, 15, 232, 0.4),
+  0 8px 24px rgba(174, 15, 232, 0.3),
+  0 16px 32px rgba(174, 15, 232, 0.2);
+  border: 4px solid black;
+}
+
+.search-bar input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: #060606;
+  padding: 12px 18px;
+  font-size: 40px;
+  outline: none;
+}
+
+.search-bar input::placeholder {
+  color: #ffffff;
+}
+
+.search-bar button {
+  background: linear-gradient(135deg, #00f2fe, #4facfe);
+  border: 3px solid rgb(246, 239, 248);
+  width: 65px;
+  height: 65px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 242, 254, 0.4);
+}
+
+.search-bar button:hover {
+  transform: scale(1.1);
+}
+
+.search-bar button img {
+  width: 26px;
+  filter: invert(1);
+}
+
+/* Layout */
+.container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  padding: 40px 3vw 60px;
+}
+
+.left-section,
+.right-section {
+  background: #000000;
+  padding: 30px;
+  border-radius: 20px;
+  border: 1px solid #ffffff33;
+  box-shadow: 0 6px 16px rgba(255, 255, 255, 0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+/* Weather Card */
+.weather {
+  background: linear-gradient(145deg, #fede3e, #ff9900);
+  padding: 50px 30px;
+  border-radius: 20px;
+  text-align: center;
+  border: 9px solid #05050544;
+  box-shadow: 0 6px 20px rgba(40, 37, 36, 0.4);
+  color: #000000;
+}
+
+.weather-icon {
+  width: 100px;
+  margin-bottom: 15px;
+}
+
+.weather h1 {
+  font-size: 56px;
+  font-weight: bold;
+}
+
+.weather h2 {
+  font-size: 30px;
+  margin-top: 10px;
+  font-weight: 600;
+}
+
+.details {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 40px;
+  gap: 20px;
+}
+
+.col {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.col img {
+  width: 60px;
+  height: 60px;
+}
+
+.col p {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.humidity,
+.wind {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+/* AQI */
+.air {
+  background: linear-gradient(145deg, #90e96d, #063d02);
+  padding: 30px;
+  border-radius: 20px;
+  color: #000000;
+  font-weight: bold;
+  box-shadow: 0 6px 16px rgba(5, 63, 46, 0.25);
+  border:3px solid black;
+}
+
+.air h3 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+.chart {
+  background: linear-gradient(145deg, #c8e637, #eeee0c);
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 8px 24px rgba(251, 29, 29, 0.3);
+  color: #fff;
+}
+.map-container {
+  position: relative;
+  height: 400px;
+  background-color: transparent;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid #f6efef22;
+  display: block;
+  flex: 1;
+}
+
+.leaflet-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100% !important;
+  height: 100% !important;
+  border-radius: 16px;
+  z-index: 1;
+  touch-action: none; /* Prevents page zoom on scroll */
+}
+
+/* Forecasts */
+.forecast-daily h3,
+.hourly-forecast h3 {
+  font-size: 24px;
+  margin-bottom: 15px;
+  color: #fff;
+  font-weight: 600;
+}
+
+.forecast-cards {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.forecast-card {
+  background: linear-gradient(145deg, #00c6ff, #0072ff);
+  border-radius: 12px;
+  padding: 16px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  flex: 1 1 140px;
+  max-width: 160px;
+  border: 1px solid #ed0d0d22;
+  color: #000000;
+}
+
+.forecast-card:hover {
+  transform: scale(1.05);
+}
+
+.forecast-card img {
+  width: 50px;
+}
+
+/* Hourly Forecast */
+.hourly-cards {
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding-bottom: 10px;
+}
+
+.hour-card {
+  background: linear-gradient(145deg, #b876df, #6f12c6);
+  border-radius: 10px;
+  padding: 14px;
+  text-align: center;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  color: #020202;
+  border: 1px solid #ffffff22;
+  min-width: 100px;
+  flex-grow: 1;
+  flex-shrink: 0;
+  scroll-snap-align: start;
+}
+
+.hour-card img {
+  width: 40px;
+}
+
+/* Hover effect */
+.box-hover {
+  transition: transform 0.3s ease;
+}
+
+.box-hover:hover {
+  transform: scale(1.015);
+}
+
+/* Responsive */
+@media (max-width: 960px) {
+  .container {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+  }
+
+  .left-section,
+  .right-section {
+    width: 100%;
+  }
+
+  .forecast-cards,
+  .hourly-cards {
+    justify-content: center;
+  }
+
+  .details {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .weather h1 {
+    font-size: 42px;
+  }
+
+  .weather h2 {
+    font-size: 24px;
+  }
+}
+
+/* Autocomplete Suggestions */
+.autocomplete {
+  position: relative;
+}
+
+.suggestion-list {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background-color: #222;
+  border: 1px solid #444;
+  border-top: none;
+  max-height: 200px;
+  overflow-y: auto;
+  z-index: 99;
+  border-radius: 0 0 15px 15px;
+}
+
+.suggestion-list li {
+  padding: 12px 18px;
+  font-size: 16px;
+  color: #fff;
+  cursor: pointer;
+  border-bottom: 1px solid #333;
+  transition: background 0.3s;
+}
+
+.suggestion-list li:hover {
+  background-color: #333;
+}
+
+/* Input size fix */
+.search-bar input {
+  font-size: 20px;
+}
+.header-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 60px;
+}
+
+.imd-logo {
+  height: 180px;
+  width: auto;
+  object-fit: contain;
+  border-radius: 8px;
+  border: 5px solid black;
+}
+
+.search-wrapper {
+  flex: 1;
+  max-width: 1100px;
+}
