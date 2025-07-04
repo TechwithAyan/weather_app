@@ -1,30 +1,33 @@
 import React, { useState, useEffect } from "react";
 
-const citySuggestions = [
-  "Mumbai", "Delhi", "Bangalore", "Hyderabad", "Chennai",
-  "Kolkata", "Guwahati", "Pune", "Jaipur", "Ahmedabad",
-  "Lucknow", "Patna", "Bhopal", "Indore", "Surat",
-  "Kochi", "Nagpur", "Vishakhapatnam", "Shillong", "Imphal",
-  "Itanagar", "Panaji", "Thiruvananthapuram", "Raipur", "Ranchi"
-];
-
 const SearchBar = ({ city, setCity, onSearch }) => {
   const [suggestions, setSuggestions] = useState([]);
 
   useEffect(() => {
-    if (!city) {
-      setSuggestions([]);
-      return;
-    }
+    const fetchSuggestions = async () => {
+      if (!city) {
+        setSuggestions([]);
+        return;
+      }
 
-    const filtered = citySuggestions.filter((c) =>
-      c.toLowerCase().startsWith(city.toLowerCase())
-    );
-    setSuggestions(filtered);
+      try {
+        const res = await fetch(
+          `https://api.openweathermap.org/geo/1.0/direct?q=${city},IN&limit=5&appid=4eb241b7af83393993d52117f98abaad`
+        );
+        const data = await res.json();
+        const names = data.map((place) => `${place.name}, ${place.state || place.country}`);
+        setSuggestions(names);
+      } catch (err) {
+        console.error("Failed to fetch city suggestions:", err);
+        setSuggestions([]);
+      }
+    };
+
+    fetchSuggestions();
   }, [city]);
 
   const handleSuggestionClick = (selectedCity) => {
-    setCity(selectedCity);
+    setCity(selectedCity.split(",")[0]); // Only use city name
     setSuggestions([]);
     onSearch();
   };
@@ -34,7 +37,7 @@ const SearchBar = ({ city, setCity, onSearch }) => {
       <input
         type="text"
         value={city}
-        placeholder="Enter city name"
+        placeholder="Enter city or place in India"
         onChange={(e) => setCity(e.target.value)}
       />
       <button onClick={onSearch}>
